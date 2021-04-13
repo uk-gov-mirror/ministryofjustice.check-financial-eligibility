@@ -6,13 +6,14 @@ module Creators
 
     def initialize(remote_ip:, raw_post:, version:)
       super()
-      parsed_raw_post = JSON.parse(raw_post, symbolize_names: true)
+      @parsed_raw_post = JSON.parse(raw_post, symbolize_names: true)
+      @version = version
       @assessment_hash = {
-        client_reference_id: parsed_raw_post[:client_reference_id],
-        submission_date: Date.parse(parsed_raw_post[:submission_date]),
-        matter_proceeding_type: parsed_raw_post[:matter_proceeding_type],
-        proceeding_type_codes: ccms_codes_from_post(parsed_raw_post),
-        version: version,
+        client_reference_id: @parsed_raw_post[:client_reference_id],
+        submission_date: Date.parse(@parsed_raw_post[:submission_date]),
+        matter_proceeding_type: @parsed_raw_post[:matter_proceeding_type],
+        proceeding_type_codes: ccms_codes_for_application,
+        version: @version,
         remote_ip: remote_ip
       }
     end
@@ -35,10 +36,20 @@ module Creators
 
     private
 
-    def ccms_codes_from_post(post)
-      return nil unless post.key?(:proceeding_types)
+    def ccms_codes_for_application
+      @version == '3' ? dummy_code_for_domestic_abuse : codes_from_post
+    end
 
-      post[:proceeding_types][:ccms_codes]
+    # For version 3, which are all single_proceeding type (domestic abuse),
+    # we just create an asssessment with one dummy domestic abuse proceeding type.
+    # This allows us to treat both versions the same for determining thresholds.
+    #
+    def dummy_code_for_domestic_abuse
+      ['DA001']
+    end
+
+    def codes_from_post
+      @parsed_raw_post[:proceeding_types][:ccms_codes]
     end
 
     def new_assessment

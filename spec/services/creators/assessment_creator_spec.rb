@@ -37,6 +37,12 @@ module Creators
           expect { subject.success? }.to change { Assessment.count }.by(1)
         end
 
+        it 'writes the dummy proceeding type code on the assessment record' do
+          subject.success?
+          assessment = Assessment.first
+          expect(assessment.proceeding_type_codes).to eq ['DA001']
+        end
+
         it 'creates a CapitalSummary record' do
           expect { subject.success? }.to change { CapitalSummary.count }.by(1)
         end

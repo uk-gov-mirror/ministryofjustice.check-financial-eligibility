@@ -5,8 +5,9 @@ module MigrationHelpers
     end
 
     def call
-      assessments = Assessment.where(version: '3', proceeding_type_codes: nil)
+      assessments = Assessment.where(version: '3')
       assessments.each do |rec|
+        next unless rec.proceeding_type_codes.empty?
         rec.update!(proceeding_type_codes: ['DA001'])
       end
     end

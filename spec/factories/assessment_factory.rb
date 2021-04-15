@@ -4,6 +4,7 @@ FactoryBot.define do
     remote_ip { Faker::Internet.ip_v4_address }
     submission_date { Date.current }
     matter_proceeding_type { 'domestic_abuse' }
+    proceeding_type_codes { ['DA001'] }
     version { '3' }
 
     trait :with_applicant do

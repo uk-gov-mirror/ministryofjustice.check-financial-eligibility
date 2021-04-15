@@ -14,7 +14,7 @@ RSpec.describe GrossIncomeSummary do
       end
     end
 
-    context 'no state benefit of type housing_benfit' do
+    context 'no state benefit of type housing_benefit' do
       it 'returns an empty array' do
         state_benefit_type = create :state_benefit_type, label: 'not_housing_benefit'
         create :state_benefit, state_benefit_type: state_benefit_type, gross_income_summary: gross_income_summary

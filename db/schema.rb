@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_14_083427) do
+ActiveRecord::Schema.define(version: 2021_04_15_083752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -77,9 +77,6 @@ ActiveRecord::Schema.define(version: 2021_04_14_083427) do
     t.decimal "pensioner_capital_disregard", default: "0.0", null: false
     t.decimal "assessed_capital", default: "0.0", null: false
     t.decimal "capital_contribution", default: "0.0", null: false
-    t.decimal "lower_threshold", default: "0.0", null: false
-    t.decimal "upper_threshold", default: "0.0", null: false
-    t.string "assessment_result", default: "pending", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["assessment_id"], name: "index_capital_summaries_on_assessment_id"
@@ -125,9 +122,6 @@ ActiveRecord::Schema.define(version: 2021_04_14_083427) do
     t.decimal "gross_housing_costs", default: "0.0", null: false
     t.decimal "total_outgoings_and_allowances", default: "0.0", null: false
     t.decimal "total_disposable_income", default: "0.0", null: false
-    t.decimal "lower_threshold", default: "0.0", null: false
-    t.decimal "upper_threshold", default: "0.0", null: false
-    t.string "assessment_result", default: "pending", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "net_housing_costs", default: "0.0"
@@ -149,6 +143,18 @@ ActiveRecord::Schema.define(version: 2021_04_14_083427) do
     t.index ["assessment_id"], name: "index_disposable_income_summaries_on_assessment_id"
   end
 
+  create_table "eligibilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "parent_id", null: false
+    t.string "type"
+    t.string "proceeding_type_code", null: false
+    t.decimal "lower_threshold"
+    t.decimal "upper_threshold"
+    t.string "assessment_result", default: "pending", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["parent_id", "proceeding_type_code"], name: "index_eligibilities_on_parent_id_and_proceeding_type_code", unique: true
+  end
+
   create_table "explicit_remarks", force: :cascade do |t|
     t.uuid "assessment_id"
     t.string "category"
@@ -161,10 +167,8 @@ ActiveRecord::Schema.define(version: 2021_04_14_083427) do
     t.uuid "assessment_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.decimal "upper_threshold", default: "0.0", null: false
     t.decimal "monthly_other_income"
     t.boolean "assessment_error", default: false
-    t.string "assessment_result", default: "pending", null: false
     t.decimal "monthly_state_benefits", default: "0.0", null: false
     t.decimal "total_gross_income", default: "0.0"
     t.decimal "friends_or_family", default: "0.0"

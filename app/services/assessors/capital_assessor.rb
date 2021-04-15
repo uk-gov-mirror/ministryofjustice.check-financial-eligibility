@@ -3,15 +3,16 @@ module Assessors
     delegate :assessed_capital, :lower_threshold, to: :capital_summary
 
     def call
-      capital_summary.update!(assessment_result: result)
+      capital_summary.eligibilites.each { |elig| elig.update_assessment_result! }
+      summary_result
     end
 
     private
 
-    def result
-      return :eligible if assessed_capital <= lower_threshold
-
-      :contribution_required
+    def summary_result
+      Utilities::ResulsSummarizer.call(capital_summary.eligibilites.map(&:assessment_result))
     end
+
+
   end
 end

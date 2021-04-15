@@ -14,4 +14,8 @@ class GrossIncomeSummary < ApplicationRecord
   def housing_benefit_payments
     state_benefits.find_by(state_benefit_type_id: StateBenefitType.housing_benefit&.id)&.state_benefit_payments || []
   end
+
+  def assessment_result
+    Utilities::ResultSummarizer.call(eligibilities.map(&:assessment_result))
+  end
 end

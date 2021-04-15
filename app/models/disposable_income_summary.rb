@@ -10,13 +10,6 @@ class DisposableIncomeSummary < ApplicationRecord
   has_many :legal_aid_outgoings, dependent: :destroy, class_name: 'Outgoings::LegalAid'
   has_many :eligibilities, class_name: 'Eligibility::DisposableIncome', foreign_key: :parent_id, dependent: :destroy
 
-  enum(
-    assessment_result: enum_hash_for(
-      :pending, :eligible, :ineligible, :contribution_required
-    ),
-    _prefix: false
-  )
-
   def calculate_monthly_childcare_amount!(eligible, cash_amount)
     calculate_monthly_equivalent!(target_field: :child_care_bank,
                                   collection: eligible ? childcare_outgoings : [])
@@ -37,5 +30,9 @@ class DisposableIncomeSummary < ApplicationRecord
   def calculate_monthly_legal_aid_amount!
     calculate_monthly_equivalent!(target_field: :legal_aid_bank,
                                   collection: legal_aid_outgoings)
+  end
+
+  def assessment_result
+    Utilities::ResultSummarizer.call(eligibilities.map(&:assessment_result))
   end
 end

@@ -41,7 +41,7 @@ module Creators
     end
 
     # For version 3, which are all single_proceeding type (domestic abuse),
-    # we just create an asssessment with one dummy domestic abuse proceeding type.
+    # we just create an assessment with one dummy domestic abuse proceeding type.
     # This allows us to treat both versions the same for determining thresholds.
     #
     def dummy_code_for_domestic_abuse
@@ -58,12 +58,13 @@ module Creators
 
     def create_new_assessment_and_summary_records
       Assessment.transaction do
-        assessment_record = Assessment.new(assessment_hash)
-        assessment_record.build_capital_summary
-        assessment_record.build_gross_income_summary
-        assessment_record.build_disposable_income_summary
-        assessment_record.save
-        assessment_record
+        assessment = Assessment.new(assessment_hash)
+        assessment.build_capital_summary
+        assessment.build_gross_income_summary
+        assessment.build_disposable_income_summary
+        assessment.save
+        Utilities::EligibilitiesCreator.call(assessment)
+        assessment
       end
     end
   end

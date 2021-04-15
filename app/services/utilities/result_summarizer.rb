@@ -1,7 +1,10 @@
 module Utilities
   class ResultSummarizer
     def self.call(individual_results)
+      return :pending if individual_results.empty?
+
       uniq_results = individual_results.uniq
+      return :pending if uniq_results.include?(:pending)
 
       return :eligible if uniq_results == [:eligible]
 

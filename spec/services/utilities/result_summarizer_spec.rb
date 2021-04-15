@@ -3,6 +3,8 @@ require 'rails_helper'
 module Utilities
 
   RSpec.describe ResultSummarizer do
+    let(:no_results) { [] }
+    let(:one_pending) { %i(eligible eligible pending) }
     let(:all_eligible) { %i(eligible eligible eligible) }
     let(:all_ineligible) { %i(ineligible ineligible ineligible) }
     let(:all_contrib) { %i(eligible_with_contribution eligible_with_contribution eligible_with_contribution) }
@@ -12,6 +14,20 @@ module Utilities
     let(:all_three) { %i(eligible eligible_with_contribution ineligible) }
 
     subject { described_class.call(results) }
+
+    context 'no results' do
+      let(:results) { no_results }
+      it 'returns :pending' do
+        expect(subject).to eq :pending
+      end
+    end
+
+    context 'one pending' do
+      let(:results) { one_pending }
+      it 'returns :pending' do
+        expect(subject).to eq :pending
+      end
+    end
 
     context 'all eligible' do
       let(:results) { all_eligible }

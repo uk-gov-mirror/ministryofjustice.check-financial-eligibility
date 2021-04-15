@@ -12,10 +12,8 @@ class CapitalSummary < ApplicationRecord
   has_one :main_home, -> { main_home }, inverse_of: :capital_summary, class_name: 'Property', dependent: :destroy
   has_many :eligibilities, class_name: 'Eligibility::Capital', foreign_key: :parent_id, dependent: :destroy
 
-  enum(
-    assessment_result: enum_hash_for(
-      :pending, :eligible, :ineligible, :contribution_required
-    ),
-    _prefix: false
-  )
+  def assessment_result
+    Utilities::ResultSummarizer.call(eligibilities.map(&:assessment_result))
+  end
+
 end

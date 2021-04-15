@@ -10,7 +10,6 @@ module Workflows
     def collate_capitals
       data = Collators::CapitalCollator.call(assessment)
       capital_summary.update!(data)
-      ThresholdManagers::Capital.call(capital_summary)
     end
   end
 end

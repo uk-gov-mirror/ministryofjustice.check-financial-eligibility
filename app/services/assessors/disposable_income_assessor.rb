@@ -1,8 +1,6 @@
 module Assessors
   class DisposableIncomeAssessor < BaseWorkflowService
-    delegate :total_disposable_income,
-             :lower_threshold,
-             :upper_threshold, to: :disposable_income_summary
+    delegate :total_disposable_income, to: :disposable_income_summary
 
     def call
       disposable_income_summary.update!(

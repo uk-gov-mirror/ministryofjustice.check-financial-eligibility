@@ -18,4 +18,8 @@ class GrossIncomeSummary < ApplicationRecord
   def assessment_result
     Utilities::ResultSummarizer.call(eligibilities.map(&:assessment_result))
   end
+
+  def eligible?
+    assessment_result == :eligible
+  end
 end

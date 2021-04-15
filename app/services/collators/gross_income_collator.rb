@@ -25,9 +25,7 @@ module Collators
 
     def default_attrs
       {
-        upper_threshold: upper_threshold,
         total_gross_income: monthly_student_loan,
-        assessment_result: 'summarised',
         monthly_student_loan: monthly_student_loan,
         student_loan: categorised_income[:student_loan],
         monthly_other_income: categorised_income[:total],
@@ -35,15 +33,6 @@ module Collators
       }
     end
 
-    def upper_threshold
-      return infinite_threshold if assessment.matter_proceeding_type == 'domestic_abuse' && assessment.applicant.involvement_type == 'applicant'
-
-      Threshold.value_for(:gross_income_upper, at: assessment.submission_date) + dependant_increase
-    end
-
-    def infinite_threshold
-      @infinite_threshold ||= Threshold.value_for(:infinite_gross_income_upper, at: assessment.submission_date)
-    end
 
     def dependant_increase_starts_after
       @dependant_increase_starts_after ||= Threshold.value_for(:dependant_increase_starts_after, at: assessment.submission_date)

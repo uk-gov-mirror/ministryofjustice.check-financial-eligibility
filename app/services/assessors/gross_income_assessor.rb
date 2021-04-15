@@ -3,21 +3,20 @@ module Assessors
     def call
       raise 'Gross income not summarised' if gross_income_summary.assessment_result == 'pending'
 
-      gross_income_summary.update!(assessment_result: assessment_result)
+      gross_income_summary.eligibilities.each do |elig|
+        elig.update!(assessment_result: assessment_result(elig))
+      end
     end
 
     private
 
-    def assessment_result
-      income < threshold ? 'eligible' : 'ineligible'
+    def assessment_result(elig)
+      income < elig.upper_threshold ? 'eligible' : 'ineligible'
     end
 
     def income
       gross_income_summary.total_gross_income
     end
 
-    def threshold
-      gross_income_summary.upper_threshold
-    end
   end
 end

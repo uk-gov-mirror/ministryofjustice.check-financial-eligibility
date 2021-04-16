@@ -55,15 +55,15 @@ module Assessors
     end
 
     def gross_income_result
-      gross_income_summary.assessment_result
+      gross_income_summary.assessment_result.to_s
     end
 
     def disposable_income_result
-      disposable_income_summary.assessment_result
+      disposable_income_summary.assessment_result.to_s
     end
 
     def capital_result
-      capital_summary.assessment_result
+      capital_summary.assessment_result.to_s
     end
   end
 end

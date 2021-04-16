@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_15_083752) do
+ActiveRecord::Schema.define(version: 2021_04_14_084415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -79,6 +79,9 @@ ActiveRecord::Schema.define(version: 2021_04_15_083752) do
     t.decimal "capital_contribution", default: "0.0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "lower_threshold", default: "0.0", null: false
+    t.decimal "upper_threshold", default: "0.0", null: false
+    t.string "assessment_result"
     t.index ["assessment_id"], name: "index_capital_summaries_on_assessment_id"
   end
 
@@ -140,6 +143,9 @@ ActiveRecord::Schema.define(version: 2021_04_15_083752) do
     t.decimal "maintenance_out_cash", default: "0.0"
     t.decimal "rent_or_mortgage_cash", default: "0.0"
     t.decimal "legal_aid_cash", default: "0.0"
+    t.decimal "lower_threshold", default: "0.0", null: false
+    t.decimal "upper_threshold", default: "0.0", null: false
+    t.string "assessment_result"
     t.index ["assessment_id"], name: "index_disposable_income_summaries_on_assessment_id"
   end
 
@@ -192,6 +198,8 @@ ActiveRecord::Schema.define(version: 2021_04_15_083752) do
     t.decimal "maintenance_in_cash", default: "0.0"
     t.decimal "property_or_lodger_cash", default: "0.0"
     t.decimal "pension_cash", default: "0.0"
+    t.decimal "upper_threshold", default: "0.0", null: false
+    t.string "assessment_result"
     t.index ["assessment_id"], name: "index_gross_income_summaries_on_assessment_id"
   end
 

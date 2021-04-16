@@ -8,7 +8,11 @@ class DisposableIncomeSummary < ApplicationRecord
   has_many :housing_cost_outgoings, dependent: :destroy, class_name: 'Outgoings::HousingCost'
   has_many :maintenance_outgoings, dependent: :destroy, class_name: 'Outgoings::Maintenance'
   has_many :legal_aid_outgoings, dependent: :destroy, class_name: 'Outgoings::LegalAid'
-  has_many :eligibilities, class_name: 'Eligibility::DisposableIncome', foreign_key: :parent_id, dependent: :destroy
+  has_many :eligibilities,
+           class_name: 'Eligibility::DisposableIncome',
+           inverse_of: :disposable_income_summary,
+           foreign_key: :parent_id,
+           dependent: :destroy
 
   def calculate_monthly_childcare_amount!(eligible, cash_amount)
     calculate_monthly_equivalent!(target_field: :child_care_bank,
@@ -32,15 +36,15 @@ class DisposableIncomeSummary < ApplicationRecord
                                   collection: legal_aid_outgoings)
   end
 
-  def assessment_result
+  def summarized_assessment_result
     Utilities::ResultSummarizer.call(eligibilities.map(&:assessment_result))
   end
 
   def eligible?
-    assessment_result == :eligible
+    summarized_assessment_result == :eligible
   end
 
   def contribution_required?
-    assessment_result == :contribution_required
+    summarized_assessment_result == :contribution_required
   end
 end

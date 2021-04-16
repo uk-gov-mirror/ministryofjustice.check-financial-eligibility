@@ -1,6 +1,6 @@
 module Eligibility
   class Capital < Base
-    belongs_to :capital_summary, foreign_key: :parent_id
+    belongs_to :capital_summary, inverse_of: :eligibilities, foreign_key: :parent_id
 
     delegate :assessed_capital, to: :capital_summary
 

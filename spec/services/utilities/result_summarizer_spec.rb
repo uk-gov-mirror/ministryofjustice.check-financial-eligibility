@@ -1,17 +1,16 @@
 require 'rails_helper'
 
 module Utilities
-
   RSpec.describe ResultSummarizer do
     let(:no_results) { [] }
-    let(:one_pending) { %i(eligible eligible pending) }
-    let(:all_eligible) { %i(eligible eligible eligible) }
-    let(:all_ineligible) { %i(ineligible ineligible ineligible) }
-    let(:all_contrib) { %i(contribution_required contribution_required contribution_required) }
-    let(:elig_and_inelig) { %i(eligible ineligible eligible) }
-    let(:elig_and_contrib) { %i(eligible contribution_required contribution_required) }
-    let(:inelig_and_contrib) { %i(ineligible contribution_required contribution_required) }
-    let(:all_three) { %i(eligible contribution_required ineligible) }
+    let(:one_pending) { %i[eligible eligible pending] }
+    let(:all_eligible) { %i[eligible eligible eligible] }
+    let(:all_ineligible) { %i[ineligible ineligible ineligible] }
+    let(:all_contrib) { %i[contribution_required contribution_required contribution_required] }
+    let(:elig_and_inelig) { %i[eligible ineligible eligible] }
+    let(:elig_and_contrib) { %i[eligible contribution_required contribution_required] }
+    let(:inelig_and_contrib) { %i[ineligible contribution_required contribution_required] }
+    let(:all_three) { %i[eligible contribution_required ineligible] }
 
     subject { described_class.call(results) }
 

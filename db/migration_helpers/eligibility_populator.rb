@@ -1,7 +1,7 @@
 module MigrationHelpers
   class EligibilityPopulator
     def self.call
-      new().call
+      new.call
     end
 
     def initialize
@@ -16,8 +16,6 @@ module MigrationHelpers
     private
 
     def populate_eligibility(klass)
-      return unless klass.has_attribute?(:assessment_result)
-
       @assessment_ids.each { |assessment_id| populate_eligibility_for_assessment(klass, assessment_id) }
     end
 
@@ -25,6 +23,7 @@ module MigrationHelpers
       assessment = Assessment.find(assessment_id)
       summary = klass.find_by(assessment_id: assessment_id)
       return if summary.nil?
+      return if summary.assessment_result == 'migrated_to_eligibility'
 
       return unless summary.eligibilities.empty?
 
@@ -32,10 +31,13 @@ module MigrationHelpers
     end
 
     def create_eligibility(summary, ptc)
-      summary.eligibilities.create!(proceeding_type_code: ptc,
-                                    lower_threshold: summary.has_attribute?(:lower_threshold) ? summary.lower_threshold : nil,
-                                    upper_threshold: summary.upper_threshold,
-                                    assessment_result: summary.assessment_result)
+      ActiveRecord::Base.transaction do
+        summary.eligibilities.create!(proceeding_type_code: ptc,
+                                      lower_threshold: summary.has_attribute?(:lower_threshold) ? summary.lower_threshold : nil,
+                                      upper_threshold: summary.upper_threshold,
+                                      assessment_result: summary.assessment_result)
+        summary.update!(assessment_result: 'migrated_to_eligibility')
+      end
     end
   end
 end

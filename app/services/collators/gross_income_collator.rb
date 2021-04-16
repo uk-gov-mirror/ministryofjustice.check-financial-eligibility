@@ -33,7 +33,6 @@ module Collators
       }
     end
 
-
     def dependant_increase_starts_after
       @dependant_increase_starts_after ||= Threshold.value_for(:dependant_increase_starts_after, at: assessment.submission_date)
     end

@@ -3,7 +3,7 @@ module Utilities
   # records for each proceeding type code for an assessment
   #
   class EligibilitiesCreator
-    SUMMARY_ASSOCIATIONS = [:capital_summary, :gross_income_summary, :disposable_income_summary].freeze
+    SUMMARY_ASSOCIATIONS = %i[capital_summary gross_income_summary disposable_income_summary].freeze
 
     def self.call(assessment)
       new(assessment).call
@@ -14,12 +14,12 @@ module Utilities
     end
 
     def call
-      SUMMARY_ASSOCIATIONS.each { |assoc| create_eligibilites_for_assoc(assoc) }
+      SUMMARY_ASSOCIATIONS.each { |assoc| create_eligibilities_for_assoc(assoc) }
     end
 
     private
 
-    def create_eligibilites_for_assoc(assoc)
+    def create_eligibilities_for_assoc(assoc)
       @assessment.proceeding_type_codes.each { |ptc| create_eligibility(assoc, ptc) }
     end
 
@@ -58,7 +58,6 @@ module Utilities
         lower_threshold: ProceedingTypeThreshold.value_for(ptc.to_sym, :disposable_income_lower, @assessment.submission_date),
         assessment_result: 'pending'
       }
-
     end
 
     def generate_gross_attrs(ptc)
@@ -70,6 +69,3 @@ module Utilities
     end
   end
 end
-
-
-

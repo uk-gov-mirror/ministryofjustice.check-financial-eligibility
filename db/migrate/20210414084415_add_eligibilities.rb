@@ -11,6 +11,6 @@ class AddEligibilities < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_index :eligibilities, [:parent_id, :proceeding_type_code], unique: true
+    add_index :eligibilities, %i[parent_id proceeding_type_code], unique: true
   end
 end

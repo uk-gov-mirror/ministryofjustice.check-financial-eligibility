@@ -8,7 +8,7 @@ module Utilities
                :with_capital_summary,
                :with_disposable_income_summary,
                :with_gross_income_summary,
-               proceeding_type_codes: %w(DA001 SE013)
+               proceeding_type_codes: %w[DA001 SE013]
       end
       let(:capital_summary) { assessment.capital_summary }
       let(:gross_income_summary) { assessment.gross_income_summary }
@@ -23,7 +23,7 @@ module Utilities
       end
 
       it 'creates all the records' do
-        expect{ subject }.to change{Eligibility::Base.count}.by(6)
+        expect { subject }.to change { Eligibility::Base.count }.by(6)
       end
 
       context 'capital eligibilities' do

@@ -17,7 +17,6 @@ module Assessors
       end
     end
 
-
     def assessment_result(elig)
       if total_disposable_income <= elig.lower_threshold
         'eligible'

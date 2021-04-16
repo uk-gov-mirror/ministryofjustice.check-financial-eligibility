@@ -52,12 +52,15 @@ FactoryBot.define do
       end
     end
 
+    # NOTE: this ends up creating two assessments because the :with_non_passported_applicant trait
+    # creates one too
+    #
     trait :with_everything do
       with_non_passported_applicant
       after(:create) do |assessment|
-        create :gross_income_summary, :with_everything, assessment: assessment, assessment_result: 'eligible'
-        create :disposable_income_summary, :with_everything, assessment: assessment, assessment_result: 'eligible'
-        create :capital_summary, :with_everything, assessment: assessment, assessment_result: 'eligible'
+        create :gross_income_summary, :with_everything, assessment: assessment
+        create :disposable_income_summary, :with_everything, assessment: assessment
+        create :capital_summary, :with_everything, assessment: assessment
       end
     end
 
@@ -65,6 +68,28 @@ FactoryBot.define do
       with_passported_applicant
       after(:create) do |assessment|
         create :capital_summary, :with_everything, assessment: assessment
+      end
+    end
+
+    trait :with_eligibilities do
+      after(:create) do |assessment|
+        if assessment.capital_summary
+          assessment.proceeding_type_codes.each do |ptc|
+            assessment.capital_summary.eligibilities << create(:capital_eligibility, proceeding_type_code: ptc)
+          end
+        end
+
+        if assessment.gross_income_summary
+          assessment.proceeding_type_codes.each do |ptc|
+            assessment.gross_income_summary.eligibilities << create(:gross_income_eligibility, proceeding_type_code: ptc)
+          end
+        end
+
+        if assessment.disposable_income_summary
+          assessment.proceeding_type_codes.each do |ptc|
+            assessment.disposable_income_summary.eligibilities << create(:disposable_income_eligibility, proceeding_type_code: ptc)
+          end
+        end
       end
     end
 

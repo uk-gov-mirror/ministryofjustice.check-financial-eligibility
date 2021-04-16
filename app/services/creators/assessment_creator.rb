@@ -8,14 +8,7 @@ module Creators
       super()
       @parsed_raw_post = JSON.parse(raw_post, symbolize_names: true)
       @version = version
-      @assessment_hash = {
-        client_reference_id: @parsed_raw_post[:client_reference_id],
-        submission_date: Date.parse(@parsed_raw_post[:submission_date]),
-        matter_proceeding_type: @parsed_raw_post[:matter_proceeding_type],
-        proceeding_type_codes: ccms_codes_for_application,
-        version: @version,
-        remote_ip: remote_ip
-      }
+      @assessment_hash = generate_assessment_hash(remote_ip)
     end
 
     def call
@@ -35,6 +28,17 @@ module Creators
     end
 
     private
+
+    def generate_assessment_hash(remote_ip)
+      {
+        client_reference_id: @parsed_raw_post[:client_reference_id],
+        submission_date: Date.parse(@parsed_raw_post[:submission_date]),
+        matter_proceeding_type: @parsed_raw_post[:matter_proceeding_type],
+        proceeding_type_codes: ccms_codes_for_application,
+        version: @version,
+        remote_ip: remote_ip
+      }
+    end
 
     def ccms_codes_for_application
       @version == '3' ? dummy_code_for_domestic_abuse : codes_from_post
@@ -62,7 +66,7 @@ module Creators
         assessment.build_capital_summary
         assessment.build_gross_income_summary
         assessment.build_disposable_income_summary
-        assessment.save
+        assessment.save!
         Utilities::EligibilitiesCreator.call(assessment)
         assessment
       end

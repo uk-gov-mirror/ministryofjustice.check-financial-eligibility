@@ -7,11 +7,11 @@ module Utilities
     let(:one_pending) { %i(eligible eligible pending) }
     let(:all_eligible) { %i(eligible eligible eligible) }
     let(:all_ineligible) { %i(ineligible ineligible ineligible) }
-    let(:all_contrib) { %i(eligible_with_contribution eligible_with_contribution eligible_with_contribution) }
+    let(:all_contrib) { %i(contribution_required contribution_required contribution_required) }
     let(:elig_and_inelig) { %i(eligible ineligible eligible) }
-    let(:elig_and_contrib) { %i(eligible eligible_with_contribution eligible_with_contribution) }
-    let(:inelig_and_contrib) { %i(ineligible eligible_with_contribution eligible_with_contribution) }
-    let(:all_three) { %i(eligible eligible_with_contribution ineligible) }
+    let(:elig_and_contrib) { %i(eligible contribution_required contribution_required) }
+    let(:inelig_and_contrib) { %i(ineligible contribution_required contribution_required) }
+    let(:all_three) { %i(eligible contribution_required ineligible) }
 
     subject { described_class.call(results) }
 
@@ -46,7 +46,7 @@ module Utilities
     context 'all eligible with contribution' do
       let(:results) { all_contrib }
       it 'returns :eligible_with_contribution' do
-        expect(subject).to eq :eligible_with_contribution
+        expect(subject).to eq :contribution_required
       end
     end
 
@@ -60,7 +60,7 @@ module Utilities
     context 'eligble and eligible_with_contribution mixed' do
       let(:results) { elig_and_contrib }
       it 'returns :eligible_with_contribution' do
-        expect(subject).to eq :eligible_with_contribution
+        expect(subject).to eq :contribution_required
       end
     end
 

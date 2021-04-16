@@ -10,9 +10,9 @@ module Utilities
 
       return :ineligible if uniq_results == [:ineligible]
 
-      return :eligible_with_contribution if uniq_results == [:eligible_with_contribution]
+      return :contribution_required if uniq_results == [:contribution_required]
 
-      return :eligible_with_contribution unless uniq_results.include?(:ineligible)
+      return :contribution_required unless uniq_results.include?(:ineligible)
 
       :partially_eligible
     end

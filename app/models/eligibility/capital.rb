@@ -14,7 +14,7 @@ module Eligibility
       if assessed_capital <= lower_threshold
         :eligible
       elsif assessed_capital <= upper_threshold
-        :eligible_with_contribution
+        :contribution_required
       else
         :ineligible
       end

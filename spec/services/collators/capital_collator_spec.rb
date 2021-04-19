@@ -105,6 +105,10 @@ module Collators
           expect(pcd).to receive(:value).and_return(100_000)
 
           subject
+          
+          puts ">>>>>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<<<".yellow
+          ap subject
+          puts ">>>>>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<<<".yellow
           expect(subject[:total_liquid]).to eq 145.83
           expect(subject[:total_non_liquid]).to eq 500
           expect(subject[:total_vehicle]).to eq 2_500

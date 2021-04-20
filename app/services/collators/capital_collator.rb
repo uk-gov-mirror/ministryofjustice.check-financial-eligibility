@@ -11,9 +11,7 @@ module Collators
       assessed_capital: 'assessed_capital',
       # lower_threshold: 'lower_threshold',
       # upper_threshold: 'upper_threshold',
-      capital_contribution: 'capital_contribution',
-      proceeding_type_codes: {}
-
+      capital_contribution: 'capital_contribution'
     }.freeze
 
     def call

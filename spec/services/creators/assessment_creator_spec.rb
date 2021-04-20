@@ -51,10 +51,6 @@ module Creators
           before { subject.success? }
           let(:capital_summary) { CapitalSummary.first }
 
-          it 'creates a pending Result record' do
-            expect(capital_summary.assessment_result).to eq 'pending'
-          end
-
           it 'creates all fields as zero' do
             expect(capital_summary.total_liquid).to eq 0.0
             expect(capital_summary.total_non_liquid).to eq 0.0
@@ -134,10 +130,6 @@ module Creators
         context 'capital summary record' do
           before { subject.success? }
           let(:capital_summary) { CapitalSummary.first }
-
-          it 'creates a pending Result record' do
-            expect(capital_summary.assessment_result).to eq 'pending'
-          end
 
           it 'creates all fields as zero' do
             expect(capital_summary.total_liquid).to eq 0.0

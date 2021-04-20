@@ -35,7 +35,7 @@ module MigrationHelpers
         summary.eligibilities.create!(proceeding_type_code: ptc,
                                       lower_threshold: summary.has_attribute?(:lower_threshold) ? summary.lower_threshold : nil,
                                       upper_threshold: summary.upper_threshold,
-                                      assessment_result: summary.assessment_result)
+                                      assessment_result: summary.assessment_result || 'pending')
         summary.update!(assessment_result: 'migrated_to_eligibility')
       end
     end

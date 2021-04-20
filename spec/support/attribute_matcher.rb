@@ -26,3 +26,6 @@ RSpec::Matchers.define :have_zero_values do |*attributes|
     "Not all the specified attribtues are zero:\nAttributes examined: #{attributes.join(',')}\nRecord: #{actual_record.inspect}"
   end
 end
+
+
+

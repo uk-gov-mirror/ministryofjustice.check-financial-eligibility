@@ -22,5 +22,13 @@ FactoryBot.define do
         end
       end
     end
+
+    trait :with_eligibilities do
+      after(:create) do |rec|
+        rec.assessment.proceeding_type_codes.each do |ptc|
+          create :disposable_income_eligibility, disposable_income_summary: rec, proceeding_type_code: ptc
+        end
+      end
+    end
   end
 end

@@ -1,6 +1,4 @@
 class CapitalSummary < ApplicationRecord
-  extend EnumHash
-
   belongs_to :assessment
 
   has_many :capital_items, dependent: :destroy

@@ -18,7 +18,7 @@ RSpec.describe MigrationHelpers::EligibilityPopulator do
         eligibility = gis.eligibilities.first
         expect(eligibility.proceeding_type_code).to eq 'DA001'
         expect(eligibility.upper_threshold).to eq gis.upper_threshold
-        expect(eligibility.assessment_result).to eq gis.assessment_result
+        expect(eligibility.assessment_result).to eq 'pending'
       end
     end
 
@@ -31,7 +31,7 @@ RSpec.describe MigrationHelpers::EligibilityPopulator do
         expect(eligibility.proceeding_type_code).to eq 'DA001'
         expect(eligibility.upper_threshold).to eq dis.upper_threshold
         expect(eligibility.lower_threshold).to eq dis.lower_threshold
-        expect(eligibility.assessment_result).to eq dis.assessment_result
+        expect(eligibility.assessment_result).to eq 'pending'
       end
     end
 
@@ -44,7 +44,7 @@ RSpec.describe MigrationHelpers::EligibilityPopulator do
         expect(eligibility.proceeding_type_code).to eq 'DA001'
         expect(eligibility.upper_threshold).to eq cap.upper_threshold
         expect(eligibility.lower_threshold).to eq cap.lower_threshold
-        expect(eligibility.assessment_result).to eq cap.assessment_result
+        expect(eligibility.assessment_result).to eq 'pending'
       end
     end
   end

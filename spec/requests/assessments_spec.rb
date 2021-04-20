@@ -119,7 +119,7 @@ RSpec.describe AssessmentsController, type: :request do
         post assessments_path, params: params.to_json, headers: headers
         expect(response).to have_http_status(:unprocessable_entity)
         expect(parsed_response[:success]).to be false
-        expect(parsed_response[:errors]).to eq ['ActiveRecord::RecordInvalid: Validation failed: Version not valid in Accept header']
+        expect(parsed_response[:errors]).to eq ['Version not valid in Accept header']
       end
     end
   end

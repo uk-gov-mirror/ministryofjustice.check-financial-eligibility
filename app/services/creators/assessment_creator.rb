@@ -66,8 +66,7 @@ module Creators
         assessment.build_capital_summary
         assessment.build_gross_income_summary
         assessment.build_disposable_income_summary
-        assessment.save!
-        Utilities::EligibilitiesCreator.call(assessment)
+        Utilities::EligibilitiesCreator.call(assessment) if assessment.save
         assessment
       end
     end

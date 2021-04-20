@@ -23,9 +23,13 @@ end
 RSpec::Matchers.define :have_assessment_error do |assessment, message|
   match do |summary_assessments|
     gross_income_result, disposable_income_result, capital_result = summary_assessments
-    assessment.gross_income_summary.update!(assessment_result: gross_income_result)
-    assessment.disposable_income_summary.update!(assessment_result: disposable_income_result)
-    assessment.capital_summary.update!(assessment_result: capital_result)
+    allow_any_instance_of(assessment.gross_income_summary.class).to receive(:summarized_assessment_result).and_return(gross_income_result)
+    allow_any_instance_of(assessment.disposable_income_summary.class).to receive(:summarized_assessment_result).and_return(disposable_income_result)
+    allow_any_instance_of(assessment.capital_summary.class).to receive(:summarized_assessment_result).and_return(capital_result)
+
+    # assessment.gross_income_summary.update!(summarized_assessment_result: gross_income_result)
+    # assessment.disposable_income_summary.update!(summarized_assessment_result: disposable_income_result)
+    # assessment.capital_summary.update!(summarized_assessment_result: capital_result)
 
     @error_raised = false
     begin

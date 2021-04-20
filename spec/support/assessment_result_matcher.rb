@@ -32,7 +32,6 @@ RSpec::Matchers.define :have_assessment_error do |assessment, message|
     rescue StandardError => @err
       @error_raised = true
       @err.message == message
-      true
     end
   end
 

@@ -9,8 +9,6 @@ module Collators
       pensioner_capital_disregard: 'pensioner_capital_disregard',
       total_capital: 'total_capital',
       assessed_capital: 'assessed_capital',
-      # lower_threshold: 'lower_threshold',
-      # upper_threshold: 'upper_threshold',
       capital_contribution: 'capital_contribution'
     }.freeze
 

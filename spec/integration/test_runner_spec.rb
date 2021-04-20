@@ -24,7 +24,7 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
 
   before { setup_test_data }
 
-  xdescribe 'run integration_tests' do
+  describe 'run integration_tests' do
     it 'passes all tests' do
       failing_tests = []
       worksheet_names.each do |worksheet_name|

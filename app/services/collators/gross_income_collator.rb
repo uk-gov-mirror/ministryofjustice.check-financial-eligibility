@@ -33,24 +33,6 @@ module Collators
       }
     end
 
-    def dependant_increase_starts_after
-      @dependant_increase_starts_after ||= Threshold.value_for(:dependant_increase_starts_after, at: assessment.submission_date)
-    end
-
-    def dependant_step
-      @dependant_step ||= Threshold.value_for(:dependant_step, at: assessment.submission_date)
-    end
-
-    def number_of_child_dependants
-      assessment.dependants.where(relationship: 'child_relative').count
-    end
-
-    def dependant_increase
-      return 0 unless number_of_child_dependants > dependant_increase_starts_after
-
-      (number_of_child_dependants - dependant_increase_starts_after) * dependant_step
-    end
-
     def monthly_state_benefits
       @monthly_state_benefits ||= Calculators::StateBenefitsCalculator.call(assessment)
     end

@@ -18,7 +18,6 @@ module Workflows
       context 'self_employed' do
         let(:applicant) { create :applicant, self_employed: true }
 
-
         it 'calls the self-employed workflow' do
           expect(SelfEmployedWorkflow).to receive(:call).with(assessment)
           subject
@@ -29,7 +28,7 @@ module Workflows
         let(:applicant) { create :applicant, self_employed: false }
 
         before do
-          assessment.gross_income_summary.eligibilities.map{ |elig| elig.update! assessment_result: 'ineligible' }
+          assessment.gross_income_summary.eligibilities.map { |elig| elig.update! assessment_result: 'ineligible' }
         end
 
         it 'collates and assesses gross income but not disposable' do
@@ -46,7 +45,7 @@ module Workflows
         let(:applicant) { create :applicant, self_employed: false }
 
         before do
-          assessment.gross_income_summary.eligibilities.map{ |elig| elig.update! assessment_result: 'eligible' }
+          assessment.gross_income_summary.eligibilities.map { |elig| elig.update! assessment_result: 'eligible' }
         end
 
         it 'collates and assesses gross income, outgoings and perfoms disposable assessment' do

@@ -6,7 +6,7 @@ module Creators
     let(:summary) { assessment.gross_income_summary }
 
     around do |example|
-      travel_to Date.new(2021, 4, 20 )
+      travel_to Date.new(2021, 4, 20)
       example.run
       travel_back
     end
@@ -17,7 +17,7 @@ module Creators
       let(:codes) { ['DA001'] }
 
       it 'creates one eligibility record' do
-        expect{subject}.to change{Eligibility::GrossIncome.count}.by(1)
+        expect { subject }.to change { Eligibility::GrossIncome.count }.by(1)
       end
 
       it 'creates a record with the expected thresholds' do
@@ -32,7 +32,7 @@ module Creators
       let(:codes) { ['SE013'] }
 
       it 'creates one eligibility record' do
-        expect{subject}.to change{Eligibility::GrossIncome.count}.by(1)
+        expect { subject }.to change { Eligibility::GrossIncome.count }.by(1)
       end
 
       context 'two children' do
@@ -63,15 +63,13 @@ module Creators
           expect(elig.assessment_result).to eq 'pending'
         end
       end
-
     end
 
     context 'multiple_proceeding_types' do
       let(:codes) { %w[DA001 DA005 SE003] }
 
-
       it 'creates one eligibility record for each proceeding type' do
-        expect{subject}.to change{Eligibility::GrossIncome.count}.by(codes.size)
+        expect { subject }.to change { Eligibility::GrossIncome.count }.by(codes.size)
       end
     end
   end

@@ -60,7 +60,6 @@ RSpec.describe MigrationHelpers::EligibilityPopulator do
 
   context 'the migration has already been done' do
     it 'does not create new records' do
-
       CapitalSummary.all.each { |rec| rec.update(assessment_result: 'migrated_to_eligibility') }
       GrossIncomeSummary.all.each { |rec| rec.update(assessment_result: 'migrated_to_eligibility') }
       DisposableIncomeSummary.all.each { |rec| rec.update(assessment_result: 'migrated_to_eligibility') }

@@ -38,7 +38,6 @@ FactoryBot.define do
       end
     end
 
-
     trait :with_all_records do
       after(:create) do |gross_income_summary|
         benefits_in_cash = create :cash_transaction_category, name: 'benefits', operation: 'credit', gross_income_summary: gross_income_summary

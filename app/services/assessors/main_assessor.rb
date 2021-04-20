@@ -14,7 +14,11 @@ module Assessors
 
     def passported_assessment
       raise AssessmentError, 'Assessment not complete: Capital assessment still pending' if capital_summary.summarized_assessment_result == :pending
-      raise AssessmentError, 'Invalid assessment status: for passported applicant' if disposable_income_summary && disposable_income_summary.summarized_assessment_result != :pending
+
+      if disposable_income_summary && disposable_income_summary.summarized_assessment_result != :pending
+        raise AssessmentError,
+              'Invalid assessment status: for passported applicant'
+      end
       raise AssessmentError, 'Invalid assessment status: for passported applicant' if gross_income_summary && gross_income_summary.summarized_assessment_result != :pending
 
       capital_summary.summarized_assessment_result.to_s

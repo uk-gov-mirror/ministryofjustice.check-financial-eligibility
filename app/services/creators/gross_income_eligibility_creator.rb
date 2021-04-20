@@ -19,7 +19,8 @@ module Creators
       @summary.eligibilities.create!(
         proceeding_type_code: ptc,
         upper_threshold: upper_threshold(ptc),
-        assessment_result: 'pending')
+        assessment_result: 'pending'
+      )
     end
 
     def upper_threshold(ptc)

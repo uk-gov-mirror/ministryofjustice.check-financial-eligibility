@@ -2,10 +2,11 @@ require 'rails_helper'
 
 module Workflows
   RSpec.describe PassportedWorkflow do
-    let(:assessment) do create :assessment,
-                               :with_gross_income_summary_and_eligibilities,
-                               :with_capital_summary_and_eligibilities,
-                               applicant: applicant
+    let(:assessment) do
+      create :assessment,
+             :with_gross_income_summary_and_eligibilities,
+             :with_capital_summary_and_eligibilities,
+             applicant: applicant
     end
     let(:applicant) { create :applicant, :with_qualifying_benefits }
     let(:capital_summary) { assessment.capital_summary }

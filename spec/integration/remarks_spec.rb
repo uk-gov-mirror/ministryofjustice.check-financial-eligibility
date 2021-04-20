@@ -343,7 +343,7 @@ RSpec.describe 'contribution_required Full Assessment with remarks' do
         amount_variation: [
           client_id,
           client_id,
-          client_id,
+          client_id
         ]
       },
       outgoings_maintenance: {
